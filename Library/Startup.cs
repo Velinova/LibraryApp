@@ -35,6 +35,7 @@ namespace Library
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var connection = "Host=localhost;Database=db_201920z_va_prj_my_lib;Username=db_201920z_va_prj_my_lib_owner;Password=my_lib;Port=5432";
             services.AddDbContext<db_201920z_va_prj_my_libContext>(options => options.UseNpgsql(connection));
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
