@@ -1,8 +1,30 @@
-﻿@{
+﻿@model Library.LogInProfile
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Log in</h2>
+            <div class="form-wrapper">
+                <form asp-action="LogIn">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Userpassword" class="control-label"></label>
+                        <input asp-for="Userpassword" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Log In" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
 </div>
+

@@ -13032,11 +13032,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dimitar\\Downloads\\Library-Dimitar\\Library\\Library\\Library.csproj",
+      "projectUniqueName": "C:\\Users\\Dimitar\\Desktop\\Git\\LibraryApp\\Library\\Library.csproj",
       "projectName": "Library",
-      "projectPath": "C:\\Users\\Dimitar\\Downloads\\Library-Dimitar\\Library\\Library\\Library.csproj",
+      "projectPath": "C:\\Users\\Dimitar\\Desktop\\Git\\LibraryApp\\Library\\Library.csproj",
       "packagesPath": "C:\\Users\\Dimitar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dimitar\\Downloads\\Library-Dimitar\\Library\\Library\\obj\\",
+      "outputPath": "C:\\Users\\Dimitar\\Desktop\\Git\\LibraryApp\\Library\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
