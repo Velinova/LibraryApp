@@ -27,7 +27,7 @@ namespace Library.Controllers
         // GET: Fees
         public async Task<IActionResult> Index()
         {
-            var db_201920z_va_prj_my_libContext = _context.Fees.Include(f => f.Borrow);
+            var db_201920z_va_prj_my_libContext = _context.Fees.Include(f => f.Borrow);            
             ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
             ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
             ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];

@@ -1,51 +1,122 @@
-﻿@model IEnumerable<Library.Reservations>
+﻿@model IEnumerable<Library.ReservationGridModel>
 
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservationstatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Reservationdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reservationstatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reservationdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profile.Profileid)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                @if (item.Reservationstatus == false)
-                {
-                <a asp-action="ConfirmReservation" asp-route-id="@item.Id" >Confirm reservation</a>
-                }
-            </td>
-        </tr>
+@if (ViewBag.Error == "true")
+{
+    <h6 class="alert-danger">
+        You can't make a reservation longer than 3 days!
+    </h6>
 }
-    </tbody>
-</table>
+@if (ViewBag.UserRole == "librarian")
+{
+    <h1>Current reservations</h1>
+}
+@if (ViewBag.UserRole == "member")
+{
+    <h1>My reservations</h1>
+
+    @if (ViewBag.NumberOfReservations <= 5)
+    {
+        <p>
+            <a class="btn btn-primary" asp-action="Create">Create Reservation</a>
+        </p>
+    }
+    else
+    {
+        <h5 class="alert-danger">You have reached limit. You have 5 unconfirmd reservations</h5>
+        <h5 class="alert-info">To make new reservation wait for confirmation or delete unconfirmed reservations</h5>
+    }
+}
+@if (ViewBag.UserRole == "librarian")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Reservation date
+                </th>
+                <th>
+                    Book Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reservationstatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reservationdate)
+                    </td>
+                    <td>
+                            @Html.DisplayFor(modelItem => item.Bookname)
+                    </td>
+                    <td>
+                        @if (ViewBag.UserRole == "member")
+                        {
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+
+                        @if (item.Reservationstatus == false)
+                        {
+                            <a class="btn btn-success" asp-action="ConfirmReservation" asp-route-id="@item.Id">Confirm reservation</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (ViewBag.UserRole == "member")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Reservation date
+                </th>
+                <th>
+                    Book Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.Profileid.ToString() == ViewBag.UserId)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reservationstatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reservationdate)
+                        </td>
+                        <td>
+                                @Html.DisplayFor(modelItem => item.Bookname)
+                        </td>
+                        <td>
+                            @if (ViewBag.UserRole == "member")
+                            {
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

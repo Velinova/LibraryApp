@@ -6,21 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Library;
+using Microsoft.AspNetCore.Http;
 
 namespace Library.Controllers
 {
     public class AuthorsController : Controller
     {
         private readonly db_201920z_va_prj_my_libContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthorsController(db_201920z_va_prj_my_libContext context)
+        public AuthorsController(db_201920z_va_prj_my_libContext context, IHttpContextAccessor httpContextAccessor)
         {
+            _httpContextAccessor = httpContextAccessor;
             _context = context;
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
         }
 
         // GET: Authors
         public async Task<IActionResult> Index()
         {
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(await _context.Authors.ToListAsync());
         }
 
@@ -38,13 +47,18 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(authors);
         }
 
         // GET: Authors/Create
         public IActionResult Create()
         {
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View();
         }
 
@@ -53,14 +67,30 @@ namespace Library.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Authorname")] Authors authors)
+        public async Task<IActionResult> Create([Bind("Authorname")] Authors authors)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(authors);
+                Authors author = new Authors();
+                var maxId = 0;
+                if (_context.Books.Count() == 0)
+                {
+                    maxId = 0;
+                }
+                else
+                {
+                    maxId = _context.Books.Max(x => x.Id);
+                }
+                author.Id = ++maxId;
+                author.Authorname = authors.Authorname;
+                _context.Add(author);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+
             }
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(authors);
         }
 
@@ -77,6 +107,9 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(authors);
         }
 
@@ -112,6 +145,9 @@ namespace Library.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(authors);
         }
 
@@ -129,7 +165,9 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(authors);
         }
 
@@ -141,11 +179,17 @@ namespace Library.Controllers
             var authors = await _context.Authors.FindAsync(id);
             _context.Authors.Remove(authors);
             await _context.SaveChangesAsync();
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return RedirectToAction(nameof(Index));
         }
 
         private bool AuthorsExists(int id)
         {
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return _context.Authors.Any(e => e.Id == id);
         }
     }

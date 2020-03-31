@@ -1,0 +1,44 @@
+﻿@model Library.RegisterMember
+@{
+    ViewData["Title"] = "Register";
+}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Register</h2>
+                <div class="form-wrapper">
+                    <form asp-action="Register">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Username" class="control-label">Username</label>
+                            <input asp-for="Username" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Userpassword" class="control-label">Password</label>
+                            <input asp-for="Userpassword" class="form-control" type="password"/>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Profilename" class="control-label">Name</label>
+                            <input asp-for="Profilename" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Surname" class="control-label">Surname</label>
+                            <input asp-for="Surname" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Profession" class="control-label">Profession</label>
+                            <input asp-for="Profession" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Register" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+

@@ -3,6 +3,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (ViewBag.UserId == null)
+{
 <div class="container">
     <div class="row">
         <div class="col-md-6">
@@ -11,12 +13,12 @@
                 <form asp-action="LogIn">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="Username" class="control-label"></label>
-                        <input asp-for="Username" class="form-control"/>
+                        <label asp-for="Username" class="control-label">User Name</label>
+                        <input asp-for="Username" class="form-control" />
                     </div>
                     <div class="form-group">
-                        <label asp-for="Userpassword" class="control-label"></label>
-                        <input asp-for="Userpassword" class="form-control"/>
+                        <label asp-for="Userpassword" class="control-label">Password</label>
+                        <input asp-for="Userpassword" class="form-control" type="password"/>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Log In" class="btn btn-primary" />
@@ -25,6 +27,8 @@
             </div>
         </div>
         
+
     </div>
 </div>
+}
 

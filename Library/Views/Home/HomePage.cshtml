@@ -3,5 +3,9 @@
     ViewData["Title"] = "HomePage";
 }
 
-<h1>HomePage</h1>
-
+<h1>Wellcome to the library</h1>
+@if (ViewBag.UserId != null && ViewBag.UserRole == "librarian") {
+<div>
+    <a  class="btn btn-primary" asp-action="Register">REGISTER NEW MEMBER</a>
+</div>
+}

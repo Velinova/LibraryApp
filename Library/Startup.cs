@@ -31,13 +31,13 @@ namespace Library
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSession();
             var connection = "Host=localhost;Database=db_201920z_va_prj_my_lib;Username=db_201920z_va_prj_my_lib_owner;Password=my_lib;Port=5432";
             services.AddDbContext<db_201920z_va_prj_my_libContext>(options => options.UseNpgsql(connection));
             services.AddHttpContextAccessor();
         }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -55,7 +55,7 @@ namespace Library
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

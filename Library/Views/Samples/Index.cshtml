@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Library.Samples>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Current samples in the library</h1>
+
+<p>
+    <a class = "btn btn-primary" asp-action="Create">Add sample</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Price
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Samplestatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Bookname)
+            </td>
+            <td>
+                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

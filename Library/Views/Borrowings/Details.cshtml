@@ -11,27 +11,33 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Borrowdate)
+            @*@Html.DisplayNameFor(model => model.Borrowdate)*@
+            Borrow date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Borrowdate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Expirationdate)
+            @*@Html.DisplayNameFor(model => model.Expirationdate)*@
+            Expiration date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Expirationdate)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Returndate)
+            @*@Html.DisplayNameFor(model => model.Returndate)*@
+            Return date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Returndate)
         </dd>
+        @if (ViewBag.UserRole == "librarian")
+        {
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Profile)
         </dt>
-        <dd class = "col-sm-10">
+       
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Profile.Profileid)
         </dd>
         <dt class = "col-sm-2">
@@ -40,9 +46,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Sample.Id)
         </dd>
+        }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @if (ViewBag.UserRole == "librarian") {
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> 
+    }
     <a asp-action="Index">Back to List</a>
 </div>

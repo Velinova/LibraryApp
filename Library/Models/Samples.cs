@@ -17,6 +17,7 @@ namespace Library
         public int Libraryid { get; set; }
         public int Bookid { get; set; }
 
+
         public virtual Books Book { get; set; }
         public virtual Libraries Library { get; set; }
         public virtual ICollection<Addedby> Addedby { get; set; }

@@ -13,12 +13,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-            <label asp-for="BookId" class="control-label"></label>
+                <label asp-for="BookId" class="control-label">Book name</label>
             <select asp-for="BookId" class ="form-control" asp-items="ViewBag.Books"></select>
         </div>
             <div class="form-group">
-                <label asp-for="ReservationDate" class="control-label"></label>
-                <input asp-for="ReservationDate" class="form-control" />
+                <label asp-for="ReservationDate" class="control-label">Reservation date</label>
+                <input asp-for="ReservationDate" class="form-control" value="@DateTime.Now.ToString("s")" />
                 <span asp-validation-for="ReservationDate" class="text-danger"></span>
             </div>
             

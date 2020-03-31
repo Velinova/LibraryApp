@@ -19,11 +19,17 @@ namespace Library.Controllers
         {
             _httpContextAccessor = httpContextAccessor;
             _context = context;
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
         }
 
         // GET: Profiles
         public async Task<IActionResult> Index()
         {
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(await _context.Profiles.ToListAsync());
         }
         // GET: Profiles/Details/5
@@ -40,13 +46,18 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(profiles);
         }
 
         // GET: Profiles/Create
         public IActionResult Create()
         {
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View();
         }
 
@@ -63,6 +74,9 @@ namespace Library.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(profiles);
         }
 
@@ -79,6 +93,9 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(profiles);
         }
 
@@ -114,6 +131,9 @@ namespace Library.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(profiles);
         }
 
@@ -131,7 +151,9 @@ namespace Library.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return View(profiles);
         }
 
@@ -143,11 +165,17 @@ namespace Library.Controllers
             var profiles = await _context.Profiles.FindAsync(id);
             _context.Profiles.Remove(profiles);
             await _context.SaveChangesAsync();
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProfilesExists(int id)
         {
+            ViewBag.UserId = _httpContextAccessor.HttpContext.Request.Cookies["id"];
+            ViewBag.UserName = _httpContextAccessor.HttpContext.Request.Cookies["username"];
+            ViewBag.UserRole = _httpContextAccessor.HttpContext.Request.Cookies["userrole"];
             return _context.Profiles.Any(e => e.Id == id);
         }
     }

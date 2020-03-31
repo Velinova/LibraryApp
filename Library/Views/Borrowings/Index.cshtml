@@ -1,59 +1,123 @@
-﻿@model IEnumerable<Library.Borrowings>
+﻿@model IList<Library.BorrowingGridModel>
 
 @{
     ViewData["Title"] = "Index";
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Borrowdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Expirationdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Returndate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Profile)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sample)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Borrowdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Expirationdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Returndate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Profile.Profileid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sample.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@if (ViewBag.Error == "true")
+{
+<h6 class="alert-danger">
+    This user has unreturned books. You can not make new borrowing for this user.
+</h6>
 }
-    </tbody>
-</table>
+<h1>Borrowings</h1>
+@if (ViewBag.UserRole == "librarian")
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Add new borrowing</a>
+    </p>
+}
+
+@if (ViewBag.UserRole == "librarian")
+{
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    Borrow date
+                </th>
+                <th>
+                    Expiration date
+                </th>
+                <th>
+                    Return date
+                </th>
+                <th>
+                    Book
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Borrowdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Expirationdate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Returndate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bookname)
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                        @if (item.Returndate == null)
+                        {
+                            <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">Confirm Borrowing</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-secondary disabled" asp-action="Edit" asp-route-id="@item.Id">Returned</a>
+                        }
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    Borrow date
+                </th>
+                <th>
+                    Expiration date
+                </th>
+                <th>
+                    Return date
+                </th>
+                <th>
+                    Book
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.Profileid.ToString() == ViewBag.UserId)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Borrowdate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Expirationdate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Returndate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Bookname)
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
